@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/habitListFragment">
+
+    <fragment
+        android:id="@+id/habitListFragment"
+        android:name="ru.sergeygap.gapstep.HabitListFragment"
+        android:label="fragment_habit_list"
+        tools:layout="@layout/fragment_habit_list">
+        <action
+            android:id="@+id/action_habitListFragment_to_createHabitFragment"
+            app:destination="@id/createHabitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createHabitFragment"
+        android:name="ru.sergeygap.gapstep.CreateHabitFragment"
+        android:label="fragment_create_habit"
+        tools:layout="@layout/fragment_create_habit">
+        <action
+            android:id="@+id/action_createHabitFragment_to_habitListFragment"
+            app:destination="@id/habitListFragment" />
+    </fragment>
+</navigation>

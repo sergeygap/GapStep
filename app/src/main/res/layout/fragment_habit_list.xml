@@ -20,6 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="@null"
+        android:fontFamily="@font/merriweather_regular"
+        android:text="@string/add"
+        app:icon="@drawable/add_24px"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
