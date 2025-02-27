@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Chip" parent="Widget.Material3.Chip.Assist">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:fontFamily">@font/merriweather_regular</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">12sp</item>
+
+        <item name="chipMinHeight">16dp</item>
+        <item name="chipStartPadding">4dp</item>
+        <item name="chipEndPadding">4dp</item>
+        <item name="textStartPadding">2dp</item>
+        <item name="textEndPadding">2dp</item>
+
+        <item name="chipStrokeColor">?attr/colorOnSurface</item>
+        <item name="chipStrokeWidth">0.5dp</item>
+
+        <item name="ensureMinTouchTargetSize">false</item>
+    </style>
+
+</resources>

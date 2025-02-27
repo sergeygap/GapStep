@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/habitListFragment"
-        android:name="ru.sergeygap.gapstep.HabitListFragment"
+        android:name="ru.sergeygap.gapstep.presentation.habit_list.HabitListFragment"
         android:label="fragment_habit_list"
         tools:layout="@layout/fragment_habit_list">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/createHabitFragment"
-        android:name="ru.sergeygap.gapstep.CreateHabitFragment"
+        android:name="ru.sergeygap.gapstep.presentation.CreateHabitFragment"
         android:label="fragment_create_habit"
         tools:layout="@layout/fragment_create_habit">
         <action
