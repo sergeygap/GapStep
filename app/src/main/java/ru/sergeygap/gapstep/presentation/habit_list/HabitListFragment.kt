@@ -40,19 +40,46 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
                 target: RecyclerView.ViewHolder
             ): Boolean = false
 
+            override fun onChildDraw(
+                c: android.graphics.Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val maxDx = viewHolder.itemView.width * 0.3f
+                val newDx = when {
+                    dX > maxDx -> maxDx
+                    dX < -maxDx -> -maxDx
+                    else -> dX
+                }
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    newDx,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 if (position == RecyclerView.NO_POSITION) return
                 val adapter = binding.rvHabit.adapter as? HabitListAdapter
-                val item = adapter?.currentList?.getOrNull(position)
+                val habit = adapter?.currentList?.getOrNull(position) ?: run {
+                    adapter?.notifyItemChanged(position)
+                    return
+                }
 
                 when (direction) {
-                    ItemTouchHelper.LEFT -> viewModel.updateItemCount("minus")
-
-                    ItemTouchHelper.RIGHT -> viewModel.updateItemCount("plus")
-
+                    ItemTouchHelper.LEFT -> viewModel.decreaseItemCount(habit)
+                    ItemTouchHelper.RIGHT -> viewModel.increaseItemCount(habit)
                 }
-                adapter?.notifyItemChanged(position)
+                adapter.notifyItemChanged(position)
             }
         }
 

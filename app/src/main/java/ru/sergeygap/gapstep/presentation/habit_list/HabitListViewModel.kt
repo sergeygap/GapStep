@@ -25,15 +25,11 @@ class HabitListViewModel : ViewModel() {
         _habits.value = list
     }
 
-    fun updateItemCount(direction: String) {
-        when (direction) {
-            "plus" -> {
-                // Логика увеличения
-            }
-            "minus" -> {
-                // Логика уменьшения
-            }
-        }
+    fun increaseItemCount(habit: Habit) {
+
+    }
+    fun decreaseItemCount(habit: Habit) {
+
     }
 
 
