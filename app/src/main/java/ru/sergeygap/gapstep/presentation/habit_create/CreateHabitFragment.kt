@@ -1,4 +1,4 @@
-package ru.sergeygap.gapstep.presentation
+package ru.sergeygap.gapstep.presentation.habit_create
 
 import android.os.Bundle
 import android.view.LayoutInflater

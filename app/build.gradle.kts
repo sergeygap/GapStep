@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.vbpd)
+    implementation(libs.vbpd.reflection)
 }

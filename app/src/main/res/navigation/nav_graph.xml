@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/createHabitFragment"
-        android:name="ru.sergeygap.gapstep.presentation.CreateHabitFragment"
+        android:name="ru.sergeygap.gapstep.presentation.habit_create.CreateHabitFragment"
         android:label="fragment_create_habit"
         tools:layout="@layout/fragment_create_habit">
         <action
