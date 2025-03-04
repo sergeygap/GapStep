@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dev.androidbroadcast.vbpd.viewBinding
@@ -17,12 +18,23 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpAdapter()
+        setupRecyclerView()
+        setupFAB()
+    }
+
+    private fun setupFAB() {
+        binding.fabHabit.setOnClickListener {
+            findNavController().navigate(R.id.action_habitListFragment_to_createHabitFragment)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        setupAdapter()
         setupScrollListener()
         setupSwipeActions()
     }
 
-    private fun setUpAdapter() {
+    private fun setupAdapter() {
         HabitListAdapter().apply {
             binding.rvHabit.adapter = this
             submitList(viewModel.habits.value)
