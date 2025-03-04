@@ -11,5 +11,7 @@
     <string name="not_useful">Неполезная</string>
     <string name="priority">Приоритет</string>
     <string name="add_habit">Добавить</string>
-    <string name="rgb_value">RGB: ($dr, $dg, $db)</string>
+    <string name="rgb_format">RGB: (%1$d, %2$d, %3$d)</string>
+    <string name="hsv_format">HSV: (%1$d, %2$d, %3$d)</string>
+
 </resources>
