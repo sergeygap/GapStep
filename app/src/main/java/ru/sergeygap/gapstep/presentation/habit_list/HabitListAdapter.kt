@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import ru.sergeygap.gapstep.databinding.ItemHabitBinding
-import ru.sergeygap.gapstep.domain.Habit
+import ru.sergeygap.gapstep.domain.entity.Habit
 
 class HabitListAdapter : ListAdapter<Habit, HabitListViewHolder>(HabitListDiffCallback()) {
     override fun onCreateViewHolder(

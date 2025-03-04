@@ -3,7 +3,7 @@ package ru.sergeygap.gapstep.presentation.habit_list
 import androidx.recyclerview.widget.RecyclerView
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.ItemHabitBinding
-import ru.sergeygap.gapstep.domain.Habit
+import ru.sergeygap.gapstep.domain.entity.Habit
 
 class HabitListViewHolder(private val binding: ItemHabitBinding) :
     RecyclerView.ViewHolder(binding.root) {

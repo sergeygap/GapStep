@@ -3,7 +3,7 @@ package ru.sergeygap.gapstep.presentation.habit_list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.sergeygap.gapstep.domain.Habit
+import ru.sergeygap.gapstep.domain.entity.Habit
 
 class HabitListViewModel : ViewModel() {
 

@@ -1,7 +1,7 @@
 package ru.sergeygap.gapstep.presentation.habit_list
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.sergeygap.gapstep.domain.Habit
+import ru.sergeygap.gapstep.domain.entity.Habit
 
 class HabitListDiffCallback : DiffUtil.ItemCallback<Habit>() {
     override fun areItemsTheSame(

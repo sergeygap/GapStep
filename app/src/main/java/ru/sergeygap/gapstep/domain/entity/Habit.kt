@@ -1,4 +1,4 @@
-package ru.sergeygap.gapstep.domain
+package ru.sergeygap.gapstep.domain.entity
 
 import androidx.annotation.ColorInt
 
