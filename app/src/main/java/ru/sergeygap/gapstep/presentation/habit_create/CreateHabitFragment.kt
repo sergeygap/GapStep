@@ -12,38 +12,63 @@ import androidx.core.graphics.set
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dev.androidbroadcast.vbpd.viewBinding
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentCreateHabitBinding
+import ru.sergeygap.gapstep.domain.entity.Habit
 
 class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
 
     private val binding: FragmentCreateHabitBinding by viewBinding(FragmentCreateHabitBinding::bind)
     private val viewModel: CreateHabitViewModel by viewModels()
+    private var selectedColor = Color.WHITE
+    private lateinit var selectedHabitType: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViewsElements()
         setupSpinner()
         setupRadioButtons()
         setupColorPicker()
     }
 
+    private fun setupViewsElements() {
+        selectedHabitType = getString(R.string.useful)
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
+        }
+        binding.btnAddHabit.setOnClickListener {
+            val habit = Habit(
+                id = 0,
+                name = binding.editTextUsername.text.toString().trim(),
+                description = binding.editTextDescription.text.toString().trim(),
+                type = selectedHabitType,
+                priority = binding.priorityAutoComplete.text.toString().trim(),
+                count = binding.editTextRepeats.text.toString().trim().toInt(),
+                period = binding.editTextGoal.text.toString().trim().toInt(),
+                color = selectedColor,
+            )
+            viewModel.addHabit(habit)
+            findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
+        }
+        binding.btnDeleteHabit.setOnClickListener {
+            findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
+        }
+    }
+
     private fun setupRadioButtons() {
         binding.radioGroupHabitType.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.radioUseful -> {
-                    // TODO: Обработка для "Полезная"
-                }
-
-                R.id.radioNotUseful -> {
-                    // TODO: Обработка для "Неполезная"
-                }
+            selectedHabitType = when (checkedId) {
+                R.id.radioUseful -> getString(R.string.useful)
+                R.id.radioNotUseful -> getString(R.string.not_useful)
+                else -> getString(R.string.useful)
             }
         }
     }
 
     private fun setupSpinner() {
-        val priorityOptions = listOf("Низкий", "Средний", "Высокий")
+        val priorityOptions = listOf(PriorityState.Low, PriorityState.Medium, PriorityState.High)
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, priorityOptions)
         binding.priorityAutoComplete.setAdapter(adapter)
     }
@@ -92,6 +117,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     }
 
     private fun updateSelectedColor(color: Int) {
+        selectedColor = color
         binding.selectedColorView.isVisible = true
         binding.textRgbValue.isVisible = true
         binding.textHsvValue.isVisible = true

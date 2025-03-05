@@ -64,7 +64,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/radioGroupHabitStroke"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         app:cardBackgroundColor="?attr/colorSurface"
@@ -87,7 +87,7 @@
                 android:id="@+id/radioUseful"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="12dp"
                 android:fontFamily="@font/merriweather_regular"
                 android:text="@string/useful" />
 
@@ -105,7 +105,6 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="2dp"
         android:hint="@string/priority"
         app:endIconMode="dropdown_menu"
@@ -123,18 +122,58 @@
             android:padding="8dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutRepeats"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:hint="@string/value_repeats"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priorityDropdownLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextRepeats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/merriweather_regular"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutGoal"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:hint="@string/goal"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutRepeats">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/merriweather_regular"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/colorPickerStroke"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="4dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_add_habit"
+        app:layout_constraintBottom_toTopOf="@id/btn_delete_habit"
         app:layout_constraintEnd_toEndOf="@id/textInputLayoutDescription"
         app:layout_constraintStart_toStartOf="@id/textInputLayoutDescription"
-        app:layout_constraintTop_toBottomOf="@id/priorityDropdownLayout"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutGoal"
         app:layout_constraintVertical_bias="0.0"
         app:strokeColor="?attr/colorOutline"
         app:strokeWidth="1dp">
@@ -195,6 +234,21 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_habit"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/merriweather_regular"
+        android:text="@string/delete"
+        android:visibility="gone"
+        app:backgroundTint="?attr/colorError"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_habit"

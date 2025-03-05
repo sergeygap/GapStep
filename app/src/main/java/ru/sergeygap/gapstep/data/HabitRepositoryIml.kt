@@ -5,23 +5,49 @@ import ru.sergeygap.gapstep.domain.repository.HabitRepository
 
 object HabitRepositoryIml : HabitRepository {
 
-    override fun getHabitById(id: Int): Habit {
-        TODO("Not yet implemented")
+    private val _listHabits = mutableListOf<Habit>().apply {
+        repeat(5) {
+            add(
+                Habit(
+                    id = it,
+                    name = "Item: $it",
+                    description = "Описание для Item: $it",
+                    priority = "Высокая",
+                    type = "Полезная",
+                    count = it,
+                    period = it + 1,
+                    color = 0xFFFFFFAA.toInt()
+                )
+            )
+        }
     }
 
-    override fun getListHabit(): List<Habit> {
-        TODO("Not yet implemented")
+    override fun getHabitById(id: Int): Habit {
+        return _listHabits.find { it.id == id }
+            ?: throw IllegalArgumentException("Habit with id $id not found")
+    }
+
+    override fun getListHabit(): List<Habit> = _listHabits.toList()
+
+    override fun addHabit(habit: Habit) {
+        val newId = if (habit.id == 0) {
+            (_listHabits.maxByOrNull { it.id }?.id ?: 0) + 1
+        } else {
+            habit.id
+        }
+        _listHabits.add(habit.copy(id = newId))
     }
 
     override fun updateHabit(habit: Habit) {
-        TODO("Not yet implemented")
-    }
-
-    override fun addHabit(habit: Habit) {
-        TODO("Not yet implemented")
+        val index = _listHabits.indexOfFirst { it.id == habit.id }
+        if (index != -1) {
+            _listHabits[index] = habit
+        } else {
+            throw IllegalArgumentException("Habit with id ${habit.id} not found")
+        }
     }
 
     override fun deleteHabit(habit: Habit) {
-        TODO("Not yet implemented")
+        _listHabits.removeIf { it.id == habit.id }
     }
 }

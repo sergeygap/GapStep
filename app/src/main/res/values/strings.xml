@@ -11,7 +11,11 @@
     <string name="not_useful">Неполезная</string>
     <string name="priority">Приоритет</string>
     <string name="add_habit">Добавить</string>
+    <string name="update">Обновить</string>
+    <string name="delete">Удалить</string>
     <string name="rgb_format">RGB: (%1$d, %2$d, %3$d)</string>
     <string name="hsv_format">HSV: (%1$d, %2$d, %3$d)</string>
+    <string name="value_repeats">Количество повторений</string>
+    <string name="goal">Цель</string>
 
 </resources>
