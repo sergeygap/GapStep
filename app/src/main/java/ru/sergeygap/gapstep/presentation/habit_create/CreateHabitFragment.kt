@@ -1,9 +1,11 @@
 package ru.sergeygap.gapstep.presentation.habit_create
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.core.graphics.createBitmap
@@ -39,7 +41,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     private fun checkHabitPassing() {
         arguments?.let {
             val args = CreateHabitFragmentArgs.fromBundle(it)
-            if (args.habitId == 0) return
+            if (args.habitId == -1) return
             habit = viewModel.getHabitById(args.habitId)
             habit?.let { fillHabitFields(it) }
             binding.btnDeleteHabit.isVisible = true
@@ -70,7 +72,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         }
         binding.btnAddHabit.setOnClickListener {
             val newHabit = Habit(
-                id = habit?.id ?: 0,
+                id = habit?.id ?: -1,
                 name = binding.editTextUsername.text.toString().trim(),
                 description = binding.editTextDescription.text.toString().trim(),
                 type = selectedHabitType,
@@ -94,7 +96,9 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
                 R.id.radioUseful -> getString(R.string.useful)
                 R.id.radioNotUseful -> getString(R.string.not_useful)
                 else -> getString(R.string.useful)
+
             }
+            hideKeyboard()
         }
     }
 
@@ -102,6 +106,9 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         val priorityOptions = listOf(PriorityState.Low, PriorityState.Medium, PriorityState.High)
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, priorityOptions)
         binding.priorityAutoComplete.setAdapter(adapter)
+        binding.priorityAutoComplete.setOnItemClickListener { _, _, _, _ ->
+            hideKeyboard()
+        }
     }
 
     private fun setupColorPicker() {
@@ -166,5 +173,11 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         val s = (hsv[1] * 255).toInt()
         val v = (hsv[2] * 255).toInt()
         binding.textHsvValue.text = getString(R.string.hsv_format, h, s, v)
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 }

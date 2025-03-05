@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_create_habit">
         <argument
             android:name="habitId"
-            android:defaultValue="0"
+            android:defaultValue="-1"
             app:argType="integer" />
         <action
             android:id="@+id/action_createHabitFragment_to_habitListFragment"

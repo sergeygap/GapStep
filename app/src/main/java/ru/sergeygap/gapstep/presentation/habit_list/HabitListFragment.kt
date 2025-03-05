@@ -35,10 +35,13 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
     }
 
     private fun setupAdapter() {
-        HabitListAdapter().apply {
-            binding.rvHabit.adapter = this
-            submitList(viewModel.habits.value)
+        val adapter = HabitListAdapter { habit ->
+            val action = HabitListFragmentDirections
+                .actionHabitListFragmentToCreateHabitFragment(habit.id)
+            findNavController().navigate(action)
         }
+        binding.rvHabit.adapter = adapter
+        adapter.submitList(viewModel.habits.value)
     }
 
     private fun setupSwipeActions() {

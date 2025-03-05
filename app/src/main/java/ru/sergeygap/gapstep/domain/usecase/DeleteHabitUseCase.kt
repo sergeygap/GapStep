@@ -6,5 +6,5 @@ import ru.sergeygap.gapstep.domain.repository.HabitRepository
 class DeleteHabitUseCase(
     private val repository: HabitRepository,
 ) {
-    operator fun invoke(habit: Habit) = repository.updateHabit(habit)
+    operator fun invoke(habit: Habit) = repository.deleteHabit(habit)
 }

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import ru.sergeygap.gapstep.databinding.ItemHabitBinding
 import ru.sergeygap.gapstep.domain.entity.Habit
 
-class HabitListAdapter : ListAdapter<Habit, HabitListViewHolder>(HabitListDiffCallback()) {
+class HabitListAdapter(
+    private val onItemClick: (Habit) -> Unit,
+) : ListAdapter<Habit, HabitListViewHolder>(HabitListDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -15,7 +17,8 @@ class HabitListAdapter : ListAdapter<Habit, HabitListViewHolder>(HabitListDiffCa
             LayoutInflater.from(parent.context),
             parent,
             false
-        )
+        ),
+        onItemClick = onItemClick
     )
 
     override fun onBindViewHolder(

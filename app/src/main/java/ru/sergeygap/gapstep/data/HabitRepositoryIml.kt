@@ -30,7 +30,7 @@ object HabitRepositoryIml : HabitRepository {
     override fun getListHabit(): List<Habit> = _listHabits.toList()
 
     override fun addHabit(habit: Habit) {
-        val newId = if (habit.id == 0) {
+        val newId = if (habit.id == -1) {
             (_listHabits.maxByOrNull { it.id }?.id ?: 0) + 1
         } else {
             habit.id
