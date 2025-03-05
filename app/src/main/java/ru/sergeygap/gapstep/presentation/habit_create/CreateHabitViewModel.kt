@@ -20,5 +20,16 @@ class CreateHabitViewModel : ViewModel() {
         addHabitUseCase(habit)
     }
 
+    fun deleteHabit(habit: Habit) {
+        deleteHabitUseCase(habit)
+    }
+
+    fun updateHabit(habit: Habit) {
+        updateHabitUseCase(habit)
+    }
+
+    fun getHabitById(id: Int): Habit {
+        return getHabitByIdUseCase(id)
+    }
 
 }

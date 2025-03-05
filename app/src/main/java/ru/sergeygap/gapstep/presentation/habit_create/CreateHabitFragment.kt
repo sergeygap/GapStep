@@ -23,14 +23,44 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     private val binding: FragmentCreateHabitBinding by viewBinding(FragmentCreateHabitBinding::bind)
     private val viewModel: CreateHabitViewModel by viewModels()
     private var selectedColor = Color.WHITE
-    private lateinit var selectedHabitType: String
+    private var selectedHabitType = ""
+    private var habit: Habit? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkHabitPassing()
+
         setupViewsElements()
         setupSpinner()
         setupRadioButtons()
         setupColorPicker()
+    }
+
+    private fun checkHabitPassing() {
+        arguments?.let {
+            val args = CreateHabitFragmentArgs.fromBundle(it)
+            if (args.habitId == 0) return
+            habit = viewModel.getHabitById(args.habitId)
+            habit?.let { fillHabitFields(it) }
+            binding.btnDeleteHabit.isVisible = true
+            binding.btnAddHabit.text = getString(R.string.save)
+        }
+    }
+
+    private fun fillHabitFields(habit: Habit) {
+        binding.editTextUsername.setText(habit.name)
+        binding.editTextDescription.setText(habit.description)
+        if (habit.type == getString(R.string.useful)) {
+            binding.radioGroupHabitType.check(R.id.radioUseful)
+            selectedHabitType = getString(R.string.useful)
+        } else {
+            binding.radioGroupHabitType.check(R.id.radioNotUseful)
+            selectedHabitType = getString(R.string.not_useful)
+        }
+        binding.priorityAutoComplete.setText(habit.priority, false)
+        binding.editTextRepeats.setText(habit.count.toString())
+        binding.editTextGoal.setText(habit.period.toString())
+        updateSelectedColor(habit.color)
     }
 
     private fun setupViewsElements() {
@@ -39,8 +69,8 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
             findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
         }
         binding.btnAddHabit.setOnClickListener {
-            val habit = Habit(
-                id = 0,
+            val newHabit = Habit(
+                id = habit?.id ?: 0,
                 name = binding.editTextUsername.text.toString().trim(),
                 description = binding.editTextDescription.text.toString().trim(),
                 type = selectedHabitType,
@@ -49,10 +79,11 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
                 period = binding.editTextGoal.text.toString().trim().toInt(),
                 color = selectedColor,
             )
-            viewModel.addHabit(habit)
+            if (habit != null) viewModel.updateHabit(newHabit) else viewModel.addHabit(newHabit)
             findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
         }
         binding.btnDeleteHabit.setOnClickListener {
+            habit?.let { viewModel.deleteHabit(it) }
             findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
         }
     }
