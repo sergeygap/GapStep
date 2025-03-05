@@ -1,266 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.habit_create.CreateHabitFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/top_app_bar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="?attr/colorSurface"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/arrow_back_24px"
-        app:navigationIconTint="?attr/colorOnSurface"
-        app:title="@string/create_habit"
-        app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutUsername"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="?attr/colorSurface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/arrow_back_24px"
+            app:navigationIconTint="?attr/colorOnSurface"
+            app:title="@string/create_habit"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/md_theme_onBackground" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/name"
-        app:endIconMode="clear_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_app_bar">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextUsername"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/merriweather_regular" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutDescription"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:hint="@string/description"
-        app:counterEnabled="true"
-        app:counterMaxLength="100"
-        app:endIconMode="clear_text"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutUsername">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/merriweather_regular" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/radioGroupHabitStroke"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintEnd_toEndOf="@id/textInputLayoutDescription"
-        app:layout_constraintStart_toStartOf="@id/textInputLayoutDescription"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescription"
-        app:strokeColor="?attr/colorOutline"
-        app:strokeWidth="1dp">
-
-        <RadioGroup
-            android:id="@+id/radioGroupHabitType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioUseful"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/merriweather_regular"
-                android:text="@string/useful" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioNotUseful"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/merriweather_regular"
-                android:text="@string/not_useful" />
-        </RadioGroup>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/priorityDropdownLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:hint="@string/priority"
-        app:endIconMode="dropdown_menu"
-        app:layout_constraintEnd_toEndOf="@+id/radioGroupHabitStroke"
-        app:layout_constraintStart_toStartOf="@+id/radioGroupHabitStroke"
-        app:layout_constraintTop_toBottomOf="@id/radioGroupHabitStroke"
-        app:strokeColor="?attr/colorOutline">
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/priorityAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/merriweather_regular"
-            android:inputType="none"
-            android:padding="8dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutRepeats"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:hint="@string/value_repeats"
-        app:endIconMode="clear_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priorityDropdownLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextRepeats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/merriweather_regular"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutGoal"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:hint="@string/goal"
-        app:endIconMode="clear_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutRepeats">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/merriweather_regular"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/colorPickerStroke"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_delete_habit"
-        app:layout_constraintEnd_toEndOf="@id/textInputLayoutDescription"
-        app:layout_constraintStart_toStartOf="@id/textInputLayoutDescription"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutGoal"
-        app:layout_constraintVertical_bias="0.0"
-        app:strokeColor="?attr/colorOutline"
-        app:strokeWidth="1dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <HorizontalScrollView
-                android:id="@+id/colorPickerScrollView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutUsername"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:scrollbars="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/colorContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <View
-                android:id="@+id/selectedColorView"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/name"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/colorPickerScrollView" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textRgbValue"
-                android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/merriweather_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutDescription"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:hint="@string/description"
+                app:counterEnabled="true"
+                app:counterMaxLength="100"
+                app:endIconMode="clear_text"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayoutUsername">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/merriweather_regular" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/radioGroupHabitStroke"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintEnd_toEndOf="@id/textInputLayoutDescription"
+                app:layout_constraintStart_toStartOf="@id/textInputLayoutDescription"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescription"
+                app:strokeColor="?attr/colorOutline"
+                app:strokeWidth="1dp">
+
+                <RadioGroup
+                    android:id="@+id/radioGroupHabitType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radioUseful"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/merriweather_regular"
+                        android:text="@string/useful" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radioNotUseful"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/merriweather_regular"
+                        android:text="@string/not_useful" />
+                </RadioGroup>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/priorityDropdownLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="@string/priority"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintEnd_toEndOf="@+id/radioGroupHabitStroke"
+                app:layout_constraintStart_toStartOf="@+id/radioGroupHabitStroke"
+                app:layout_constraintTop_toBottomOf="@id/radioGroupHabitStroke"
+                app:strokeColor="?attr/colorOutline">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/priorityAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:inputType="none"
+                    android:padding="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutRepeats"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:hint="@string/value_repeats"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/priorityDropdownLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRepeats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutGoal"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:hint="@string/goal"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayoutRepeats">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/colorPickerStroke"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@id/selectedColorView"
-                app:layout_constraintTop_toBottomOf="@id/selectedColorView"
-                tools:text="RGB: (255, 0, 0)" />
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_delete_habit"
+                app:layout_constraintEnd_toEndOf="@id/textInputLayoutDescription"
+                app:layout_constraintStart_toStartOf="@id/textInputLayoutDescription"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayoutGoal"
+                app:layout_constraintVertical_bias="0.0"
+                app:strokeColor="?attr/colorOutline"
+                app:strokeWidth="1dp">
 
-            <TextView
-                android:id="@+id/textHsvValue"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <HorizontalScrollView
+                        android:id="@+id/colorPickerScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:scrollbars="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/colorContainer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <View
+                        android:id="@+id/selectedColorView"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/colorPickerScrollView" />
+
+                    <TextView
+                        android:id="@+id/textRgbValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/selectedColorView"
+                        app:layout_constraintTop_toBottomOf="@id/selectedColorView"
+                        tools:text="RGB: (255, 0, 0)" />
+
+                    <TextView
+                        android:id="@+id/textHsvValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/textRgbValue"
+                        app:layout_constraintTop_toBottomOf="@id/textRgbValue"
+                        tools:text="HSV: (0, 255, 255)" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_habit"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_margin="16dp"
+                android:fontFamily="@font/merriweather_regular"
+                android:text="@string/delete"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@id/textRgbValue"
-                app:layout_constraintTop_toBottomOf="@id/textRgbValue"
-                tools:text="HSV: (0, 255, 255)" />
-        </LinearLayout>
+                app:backgroundTint="?attr/colorError"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_add_habit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_delete_habit"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:fontFamily="@font/merriweather_regular"
-        android:text="@string/delete"
-        android:visibility="gone"
-        app:backgroundTint="?attr/colorError"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_add_habit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_habit"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:fontFamily="@font/merriweather_regular"
-        android:text="@string/add_habit"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_habit"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:fontFamily="@font/merriweather_regular"
+                android:text="@string/add_habit"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

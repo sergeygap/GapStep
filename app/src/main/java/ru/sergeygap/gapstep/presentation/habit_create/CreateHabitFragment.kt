@@ -12,6 +12,7 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.set
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,7 +25,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
 
     private val binding: FragmentCreateHabitBinding by viewBinding(FragmentCreateHabitBinding::bind)
     private val viewModel: CreateHabitViewModel by viewModels()
-    private var selectedColor = Color.WHITE
+    private var selectedColor: Int? = null
     private var selectedHabitType = ""
     private var habit: Habit? = null
 
@@ -32,6 +33,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         super.onViewCreated(view, savedInstanceState)
         checkHabitPassing()
 
+        setupTextWatchers()
         setupViewsElements()
         setupSpinner()
         setupRadioButtons()
@@ -66,6 +68,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     }
 
     private fun setupViewsElements() {
+        binding.btnAddHabit.isEnabled = false
         selectedHabitType = getString(R.string.useful)
         binding.topAppBar.setNavigationOnClickListener {
             findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
@@ -79,7 +82,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
                 priority = binding.priorityAutoComplete.text.toString().trim(),
                 count = binding.editTextRepeats.text.toString().trim().toInt(),
                 period = binding.editTextGoal.text.toString().trim().toInt(),
-                color = selectedColor,
+                color = selectedColor ?: requireContext().getColor(R.color.md_theme_primary),
             )
             if (habit != null) viewModel.updateHabit(newHabit) else viewModel.addHabit(newHabit)
             findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
@@ -99,6 +102,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
 
             }
             hideKeyboard()
+            updateButtonState()
         }
     }
 
@@ -156,6 +160,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
 
     private fun updateSelectedColor(color: Int) {
         selectedColor = color
+        updateButtonState(true)
         binding.selectedColorView.isVisible = true
         binding.textRgbValue.isVisible = true
         binding.textHsvValue.isVisible = true
@@ -173,6 +178,31 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         val s = (hsv[1] * 255).toInt()
         val v = (hsv[2] * 255).toInt()
         binding.textHsvValue.text = getString(R.string.hsv_format, h, s, v)
+    }
+
+    private fun setupTextWatchers() {
+        binding.editTextUsername.doAfterTextChanged { updateButtonState() }
+        binding.editTextDescription.doAfterTextChanged { updateButtonState() }
+        binding.priorityAutoComplete.doAfterTextChanged { updateButtonState() }
+        binding.editTextRepeats.doAfterTextChanged { updateButtonState() }
+        binding.editTextGoal.doAfterTextChanged { updateButtonState() }
+    }
+
+    private fun updateButtonState(editMode: Boolean = false) {
+        val isUsernameValid = binding.editTextUsername.text?.trim().isNullOrEmpty().not()
+        val isDescriptionValid = binding.editTextDescription.text?.trim().isNullOrEmpty().not()
+        val isPriorityValid = binding.priorityAutoComplete.text?.trim().isNullOrEmpty().not()
+        val isRepeatsValid = binding.editTextRepeats.text?.trim().isNullOrEmpty().not()
+        val isGoalValid = binding.editTextGoal.text?.trim().isNullOrEmpty().not()
+        val isRadioSelected = binding.radioGroupHabitType.checkedRadioButtonId != -1
+
+        val isFormValid =
+            isUsernameValid && isDescriptionValid &&
+                    isPriorityValid && isRepeatsValid && isGoalValid && isRadioSelected
+
+        if (editMode) binding.btnAddHabit.isEnabled = true
+
+        binding.btnAddHabit.isEnabled = isFormValid
     }
 
     private fun hideKeyboard() {

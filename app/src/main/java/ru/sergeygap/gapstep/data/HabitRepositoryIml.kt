@@ -5,22 +5,7 @@ import ru.sergeygap.gapstep.domain.repository.HabitRepository
 
 object HabitRepositoryIml : HabitRepository {
 
-    private val _listHabits = mutableListOf<Habit>().apply {
-        repeat(5) {
-            add(
-                Habit(
-                    id = it,
-                    name = "Item: $it",
-                    description = "Описание для Item: $it",
-                    priority = "Высокая",
-                    type = "Полезная",
-                    count = it,
-                    period = it + 1,
-                    color = 0xFFFFFFAA.toInt()
-                )
-            )
-        }
-    }
+    private val _listHabits = mutableListOf<Habit>()
 
     override fun getHabitById(id: Int): Habit {
         return _listHabits.find { it.id == id }
