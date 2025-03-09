@@ -18,5 +18,6 @@
     <string name="value_repeats">Количество повторений</string>
     <string name="goal">Цель</string>
     <string name="save">Сохранить</string>
+    <string name="goalError">Кол-во повторений должно быть меньше, чем Ваша цель</string>
 
 </resources>

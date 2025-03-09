@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -16,6 +17,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import dev.androidbroadcast.vbpd.viewBinding
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentCreateHabitBinding
@@ -80,7 +82,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
                 description = binding.editTextDescription.text.toString().trim(),
                 type = selectedHabitType,
                 priority = binding.priorityAutoComplete.text.toString().trim(),
-                count = binding.editTextRepeats.text.toString().trim().toInt(),
+                count = binding.editTextRepeats.text?.trim()?.toString()?.toIntOrNull() ?: 0,
                 period = binding.editTextGoal.text.toString().trim().toInt(),
                 color = selectedColor ?: requireContext().getColor(R.color.md_theme_primary),
             )
@@ -159,6 +161,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     }
 
     private fun updateSelectedColor(color: Int) {
+        hideKeyboard()
         selectedColor = color
         updateButtonState(true)
         binding.selectedColorView.isVisible = true
@@ -189,21 +192,42 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     }
 
     private fun updateButtonState(editMode: Boolean = false) {
-        val isUsernameValid = binding.editTextUsername.text?.trim().isNullOrEmpty().not()
-        val isDescriptionValid = binding.editTextDescription.text?.trim().isNullOrEmpty().not()
-        val isPriorityValid = binding.priorityAutoComplete.text?.trim().isNullOrEmpty().not()
-        val isRepeatsValid = binding.editTextRepeats.text?.trim().isNullOrEmpty().not()
-        val isGoalValid = binding.editTextGoal.text?.trim().isNullOrEmpty().not()
+        val isUsernameValid = binding.editTextUsername.text.isNotNullOrNotEmpty()
+        val isDescriptionValid = binding.editTextDescription.text.isNotNullOrNotEmpty()
+        val isPriorityValid = binding.priorityAutoComplete.text.isNotNullOrNotEmpty()
+        val isGoalValid = binding.editTextGoal.text.isNotNullOrNotEmpty()
         val isRadioSelected = binding.radioGroupHabitType.checkedRadioButtonId != -1
+        val isGoalLessRepeats = if (isGoalValid) {
+            isGoalLessRepeats()
+        } else {
+            false
+        }
 
-        val isFormValid =
-            isUsernameValid && isDescriptionValid &&
-                    isPriorityValid && isRepeatsValid && isGoalValid && isRadioSelected
+        val isFormValid = isUsernameValid && isDescriptionValid &&
+                isPriorityValid && isGoalValid && isRadioSelected &&
+                isGoalLessRepeats
 
         if (editMode) binding.btnAddHabit.isEnabled = true
 
         binding.btnAddHabit.isEnabled = isFormValid
     }
+
+    private fun isGoalLessRepeats(): Boolean {
+        val repeatsText = binding.editTextRepeats.text?.trim().toString()
+        if (repeatsText.isBlank()) return true
+        val goal = binding.editTextGoal.text?.trim().toString().toInt()
+        return if (repeatsText.toInt() >= goal) {
+            binding.editTextGoal.error = getString(R.string.goalError)
+            binding.textInputLayoutGoal.endIconMode = TextInputLayout.END_ICON_NONE
+            false
+        } else {
+            binding.editTextGoal.error = null
+            binding.textInputLayoutGoal.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+            true
+        }
+    }
+
+    private fun Editable?.isNotNullOrNotEmpty(): Boolean = this?.trim().isNullOrEmpty().not()
 
     private fun hideKeyboard() {
         val imm =
