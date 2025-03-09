@@ -19,5 +19,6 @@
     <string name="goal">Цель</string>
     <string name="save">Сохранить</string>
     <string name="goalError">Кол-во повторений должно быть меньше, чем Ваша цель</string>
+    <string name="helper_text_repeats_default_0">По умолчанию: 0</string>
 
 </resources>

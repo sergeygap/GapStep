@@ -146,6 +146,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:hint="@string/value_repeats"
                 app:endIconMode="clear_text"
+                app:helperText="@string/helper_text_repeats_default_0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/priorityDropdownLayout">
@@ -255,7 +256,7 @@
                 style="@style/Widget.Material3.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_margin="4dp"
                 android:fontFamily="@font/merriweather_regular"
                 android:text="@string/delete"
                 android:visibility="gone"
