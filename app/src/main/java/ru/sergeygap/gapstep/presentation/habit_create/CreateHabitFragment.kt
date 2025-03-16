@@ -179,6 +179,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         hideKeyboard()
         selectedColor = color
         updateButtonState(true)
+        binding.tvUserColorPicked.isVisible = true
         binding.selectedColorView.isVisible = true
         binding.textRgbValue.isVisible = true
         binding.textHsvValue.isVisible = true
