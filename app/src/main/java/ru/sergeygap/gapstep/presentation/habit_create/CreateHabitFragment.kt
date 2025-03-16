@@ -86,7 +86,9 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
                 name = binding.editTextUsername.text.toString().trim(),
                 description = binding.editTextDescription.text.toString().trim(),
                 type = selectedHabitType,
-                priority = binding.priorityAutoComplete.text.toString().trim(),
+                priority = binding.priorityAutoComplete.text?.trim()?.toString().orEmpty().ifEmpty {
+                    PriorityState.Medium.toString()
+                },
                 count = binding.editTextRepeats.text?.trim()?.toString()?.toIntOrNull() ?: 0,
                 period = binding.editTextGoal.text.toString().trim().toInt(),
                 color = selectedColor ?: requireContext().getColor(R.color.md_theme_primary),
@@ -207,7 +209,6 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     private fun updateButtonState(editMode: Boolean = false) {
         val isUsernameValid = binding.editTextUsername.text.isNotNullOrNotEmpty()
         val isDescriptionValid = binding.editTextDescription.text.isNotNullOrNotEmpty()
-        val isPriorityValid = binding.priorityAutoComplete.text.isNotNullOrNotEmpty()
         val isGoalValid = binding.editTextGoal.text.isNotNullOrNotEmpty()
         val isRadioSelected = binding.radioGroupHabitType.checkedRadioButtonId != -1
         val isGoalLessRepeats = if (isGoalValid) {
@@ -217,8 +218,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         }
 
         val isFormValid = isUsernameValid && isDescriptionValid &&
-                isPriorityValid && isGoalValid && isRadioSelected &&
-                isGoalLessRepeats
+                isGoalValid && isRadioSelected && isGoalLessRepeats
 
         if (editMode) binding.btnAddHabit.isEnabled = true
 

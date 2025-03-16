@@ -123,11 +123,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:hint="@string/priority"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
+                app:boxStrokeColor="?attr/colorOnSurfaceVariant"
+                app:boxStrokeErrorColor="?attr/colorError"
                 app:endIconMode="dropdown_menu"
+                app:endIconTint="?attr/colorOnSurfaceVariant"
+                app:helperText="@string/helper_text_priority_medium"
+                app:helperTextTextColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintEnd_toEndOf="@+id/radioGroupHabitStroke"
                 app:layout_constraintStart_toStartOf="@+id/radioGroupHabitStroke"
-                app:layout_constraintTop_toBottomOf="@id/radioGroupHabitStroke"
-                app:strokeColor="?attr/colorOutline">
+                app:layout_constraintTop_toBottomOf="@id/radioGroupHabitStroke">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/priorityAutoComplete"
@@ -135,7 +140,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/merriweather_regular"
                     android:inputType="none"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="0dp"
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -147,6 +155,7 @@
                 android:hint="@string/value_repeats"
                 app:endIconMode="clear_text"
                 app:helperText="@string/helper_text_repeats_default_0"
+                app:helperTextTextColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/priorityDropdownLayout">
