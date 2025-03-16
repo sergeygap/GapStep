@@ -54,6 +54,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     }
 
     private fun fillHabitFields(habit: Habit) {
+        binding.topAppBar.title = getString(R.string.change_habit)
         binding.editTextUsername.setText(habit.name)
         binding.editTextDescription.setText(habit.description)
         if (habit.type == getString(R.string.useful)) {
