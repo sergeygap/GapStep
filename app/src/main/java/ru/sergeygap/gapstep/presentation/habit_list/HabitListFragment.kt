@@ -1,5 +1,6 @@
 package ru.sergeygap.gapstep.presentation.habit_list
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dev.androidbroadcast.vbpd.viewBinding
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentHabitListBinding
 
@@ -54,13 +56,15 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
             findNavController().navigate(action)
         }
         binding.rvHabit.adapter = adapter
-        adapter.submitList(viewModel.habits.value)
+        viewModel.habits.observe(viewLifecycleOwner) { habits ->
+            (binding.rvHabit.adapter as? HabitListAdapter)?.submitList(habits)
+        }
     }
 
     private fun setupSwipeActions() {
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(
             0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ItemTouchHelper.RIGHT
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -77,12 +81,33 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                val maxDx = viewHolder.itemView.width * 0.3f
+                val adapter = binding.rvHabit.adapter as? HabitListAdapter
+                val position = viewHolder.bindingAdapterPosition
+                val habitColor = adapter?.currentList?.getOrNull(position)?.color
+                    ?: Color.argb(0, 0, 0, 0)
+
+                val maxDx = viewHolder.itemView.width * 0.25f
                 val newDx = when {
                     dX > maxDx -> maxDx
                     dX < -maxDx -> -maxDx
                     else -> dX
                 }
+
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addSwipeRightBackgroundColor(habitColor)
+                    .addSwipeRightLabel(getString(R.string.delete))
+                    .setSwipeRightLabelColor(Color.WHITE)
+                    .create()
+                    .decorate()
+
                 super.onChildDraw(
                     c,
                     recyclerView,
@@ -95,25 +120,19 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 if (position == RecyclerView.NO_POSITION) return
                 val adapter = binding.rvHabit.adapter as? HabitListAdapter
-                val habit = adapter?.currentList?.getOrNull(position) ?: run {
-                    adapter?.notifyItemChanged(position)
-                    return
-                }
+                val habit = adapter?.currentList?.getOrNull(position) ?: return
 
                 when (direction) {
-                    ItemTouchHelper.LEFT -> viewModel.decreaseItemCount(habit)
-                    ItemTouchHelper.RIGHT -> viewModel.increaseItemCount(habit)
+                    ItemTouchHelper.RIGHT -> viewModel.deleteHabit(habit)
                 }
-                adapter.notifyItemChanged(position)
             }
         }
 
         ItemTouchHelper(swipeCallback).attachToRecyclerView(binding.rvHabit)
     }
-
 
     private fun setupScrollListener() {
         binding.rvHabit.addOnScrollListener(object : RecyclerView.OnScrollListener() {

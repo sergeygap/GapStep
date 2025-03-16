@@ -1,7 +1,5 @@
 package ru.sergeygap.gapstep.domain.entity
 
-import androidx.annotation.ColorInt
-
 data class Habit(
     val id: Int = 0,
     val name: String = "Чтение",
@@ -10,6 +8,5 @@ data class Habit(
     val type: String = "Полезная",
     val count: Int = 0,
     val period: Int = 0,
-    @ColorInt
     val color: Int = 0xFFFFFFAA.toInt(),
 )
