@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_habit_list">
         <action
             android:id="@+id/action_habitListFragment_to_createHabitFragment"
-            app:destination="@id/createHabitFragment" />
+            app:destination="@id/createHabitFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/createHabitFragment"
@@ -25,6 +27,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_createHabitFragment_to_habitListFragment"
-            app:destination="@id/habitListFragment" />
+            app:destination="@id/habitListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 </navigation>
