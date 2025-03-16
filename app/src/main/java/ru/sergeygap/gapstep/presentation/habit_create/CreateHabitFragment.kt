@@ -16,9 +16,13 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentCreateHabitBinding
 import ru.sergeygap.gapstep.domain.entity.Habit
@@ -119,45 +123,53 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     }
 
     private fun setupColorPicker() {
-        val colorContainer = binding.colorContainer
-        colorContainer.post {
-            val width = colorContainer.width
-            val height = colorContainer.height
+        binding.progressCircular.isVisible = true
 
-            val gradientBitmap = createBitmap(width, height)
-            (0 until width).forEach { x ->
-                val hue = 360f * x / (width - 1)
-                val color = Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
-                for (y in 0 until height) gradientBitmap[x, y] = color
-            }
-            colorContainer.background = gradientBitmap.toDrawable(resources)
-        }
-
-        val squaresCount = 16
-        val step = 360f / squaresCount
-        val strokeWidth = resources.getDimensionPixelSize(R.dimen.square_stroke_width)
-
-        (0 until squaresCount).forEach { i ->
-            val hue = i * step
-            val color = Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
-            val squareSize = resources.getDimensionPixelSize(R.dimen.square_size)
-            val margin = (squareSize * 0.25).toInt()
-
-            val drawable = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                setColor(color)
-                setStroke(strokeWidth, Color.WHITE)
-            }
-
-            val squareView = View(requireContext()).apply {
-                layoutParams = LinearLayout.LayoutParams(squareSize, squareSize).apply {
-                    rightMargin = margin
+        binding.colorContainer.post {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val gradientBitmap = withContext(Dispatchers.Default) {
+                    val width = binding.colorContainer.width
+                    val height = binding.colorContainer.height
+                    val bitmap = createBitmap(width, height)
+                    for (x in 0 until width) {
+                        val hue = 360f * x / (width - 1)
+                        val color = Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
+                        for (y in 0 until height) {
+                            bitmap[x, y] = color
+                        }
+                    }
+                    bitmap
                 }
-                background = drawable
-                setOnClickListener { updateSelectedColor(color) }
-            }
 
-            colorContainer.addView(squareView)
+                binding.colorContainer.background = gradientBitmap.toDrawable(resources)
+
+                val squaresCount = 16
+                val step = 360f / squaresCount
+                val strokeWidth = resources.getDimensionPixelSize(R.dimen.square_stroke_width)
+                for (i in 0 until squaresCount) {
+                    val hue = i * step
+                    val color = Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
+                    val squareSize = resources.getDimensionPixelSize(R.dimen.square_size)
+                    val margin = (squareSize * 0.25).toInt()
+
+                    val drawable = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        setColor(color)
+                        setStroke(strokeWidth, Color.WHITE)
+                    }
+
+                    val squareView = View(requireContext()).apply {
+                        layoutParams = LinearLayout.LayoutParams(squareSize, squareSize).apply {
+                            rightMargin = margin
+                        }
+                        background = drawable
+                        setOnClickListener { updateSelectedColor(color) }
+                    }
+
+                    binding.colorContainer.addView(squareView)
+                }
+                binding.progressCircular.isVisible = false
+            }
         }
     }
 
