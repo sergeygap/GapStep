@@ -35,4 +35,13 @@ object HabitRepositoryIml : HabitRepository {
     override fun deleteHabit(habit: Habit) {
         _listHabits.removeIf { it.id == habit.id }
     }
+
+    override fun increaseCountInHabit(habit: Habit) {
+        val index = _listHabits.indexOfFirst { it.id == habit.id }
+        if (index != -1) {
+            _listHabits[index] = habit.copy(count = habit.count + 1)
+        } else {
+            throw IllegalArgumentException("Habit with id ${habit.id} not found")
+        }
+    }
 }

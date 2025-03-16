@@ -1,5 +1,6 @@
 package ru.sergeygap.gapstep.presentation.habit_list
 
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -50,11 +51,16 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
     }
 
     private fun setupAdapter() {
-        val adapter = HabitListAdapter { habit ->
-            val action = HabitListFragmentDirections
-                .actionHabitListFragmentToCreateHabitFragment(habit.id)
-            findNavController().navigate(action)
-        }
+        val adapter = HabitListAdapter(
+            onItemClick = { habit ->
+                val action = HabitListFragmentDirections
+                    .actionHabitListFragmentToCreateHabitFragment(habit.id)
+                findNavController().navigate(action)
+            },
+            onItemLongClick = { habit ->
+                viewModel.increaseCountInHabit(habit)
+            }
+        )
         binding.rvHabit.adapter = adapter
         viewModel.habits.observe(viewLifecycleOwner) { habits ->
             (binding.rvHabit.adapter as? HabitListAdapter)?.submitList(habits)
@@ -73,7 +79,7 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
             ): Boolean = false
 
             override fun onChildDraw(
-                c: android.graphics.Canvas,
+                c: Canvas,
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 dX: Float,
