@@ -2,9 +2,9 @@
     <string name="app_name">GapStep</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add">Добавить</string>
-    <string name="create">Создать привычку</string>
     <string name="times_and_period">%1$d/%2$d</string>
     <string name="create_habit">Создать привычку</string>
+    <string name="create_first_habit">Создайте свою первую привычку</string>
     <string name="change_habit">Изменить привычку</string>
     <string name="name">Название</string>
     <string name="description">Описание</string>

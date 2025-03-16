@@ -2,6 +2,9 @@ package ru.sergeygap.gapstep.presentation.habit_list
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,6 +28,16 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
     private fun setupFAB() {
         binding.fabHabit.setOnClickListener {
             findNavController().navigate(R.id.action_habitListFragment_to_createHabitFragment)
+        }
+        if (viewModel.habits.value.isNullOrEmpty()) {
+            binding.fabHabit.apply {
+                text = getString(R.string.create_first_habit)
+                icon =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.trending_up_24px)
+                updateLayoutParams {
+                    width = ViewGroup.LayoutParams.MATCH_PARENT
+                }
+            }
         }
     }
 

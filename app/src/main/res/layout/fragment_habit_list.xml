@@ -22,9 +22,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@null"
+        android:ellipsize="end"
         android:fontFamily="@font/merriweather_black"
-        android:text="@string/create"
+        android:text="@string/create_habit"
         app:icon="@drawable/add_24px"
-        app:iconGravity="start" />
+        app:iconGravity="textStart" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
