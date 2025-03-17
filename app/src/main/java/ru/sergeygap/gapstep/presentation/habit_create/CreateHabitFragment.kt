@@ -26,13 +26,14 @@ import kotlinx.coroutines.withContext
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentCreateHabitBinding
 import ru.sergeygap.gapstep.domain.entity.Habit
+import ru.sergeygap.gapstep.domain.entity.HabitType
 
 class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
 
     private val binding: FragmentCreateHabitBinding by viewBinding(FragmentCreateHabitBinding::bind)
     private val viewModel: CreateHabitViewModel by viewModels()
     private var selectedColor: Int? = null
-    private var selectedHabitType = ""
+    private var selectedHabitType: HabitType = HabitType.Useful
     private var habit: Habit? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,12 +62,12 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         binding.topAppBar.title = getString(R.string.change_habit)
         binding.editTextUsername.setText(habit.name)
         binding.editTextDescription.setText(habit.description)
-        if (habit.type == getString(R.string.useful)) {
+        if (habit.type.type == getString(R.string.useful)) {
             binding.radioGroupHabitType.check(R.id.radioUseful)
-            selectedHabitType = getString(R.string.useful)
+            selectedHabitType = HabitType.Useful
         } else {
             binding.radioGroupHabitType.check(R.id.radioNotUseful)
-            selectedHabitType = getString(R.string.not_useful)
+            selectedHabitType = HabitType.NotUseful
         }
         binding.priorityAutoComplete.setText(habit.priority, false)
         binding.editTextRepeats.setText(habit.count.toString())
@@ -76,7 +77,6 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
 
     private fun setupViewsElements() {
         binding.btnAddHabit.isEnabled = false
-        selectedHabitType = getString(R.string.useful)
         binding.topAppBar.setNavigationOnClickListener {
             findNavController().navigate(R.id.action_createHabitFragment_to_habitListFragment)
         }
@@ -105,9 +105,9 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
     private fun setupRadioButtons() {
         binding.radioGroupHabitType.setOnCheckedChangeListener { _, checkedId ->
             selectedHabitType = when (checkedId) {
-                R.id.radioUseful -> getString(R.string.useful)
-                R.id.radioNotUseful -> getString(R.string.not_useful)
-                else -> getString(R.string.useful)
+                R.id.radioUseful -> HabitType.Useful
+                R.id.radioNotUseful -> HabitType.NotUseful
+                else -> HabitType.Useful
 
             }
             hideKeyboard()

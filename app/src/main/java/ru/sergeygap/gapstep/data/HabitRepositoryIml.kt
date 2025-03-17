@@ -1,11 +1,23 @@
 package ru.sergeygap.gapstep.data
 
 import ru.sergeygap.gapstep.domain.entity.Habit
+import ru.sergeygap.gapstep.domain.entity.HabitType
 import ru.sergeygap.gapstep.domain.repository.HabitRepository
 
 object HabitRepositoryIml : HabitRepository {
 
-    private val _listHabits = mutableListOf<Habit>()
+    private val _listHabits = mutableListOf<Habit>().apply {
+        repeat(6) {
+            Habit(
+                id = it,
+                type = if ((it % 2) == 0) {
+                    HabitType.Useful
+                } else {
+                    HabitType.NotUseful
+                }
+            )
+        }
+    }
 
     override fun getHabitById(id: Int): Habit {
         return _listHabits.find { it.id == id }
