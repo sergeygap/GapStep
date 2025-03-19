@@ -56,4 +56,5 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.vbpd)
     implementation(libs.vbpd.reflection)
+    implementation(libs.recyclerview.swipedecorator)
 }

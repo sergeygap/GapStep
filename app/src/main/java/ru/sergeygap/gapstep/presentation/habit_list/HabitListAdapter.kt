@@ -8,6 +8,7 @@ import ru.sergeygap.gapstep.domain.entity.Habit
 
 class HabitListAdapter(
     private val onItemClick: (Habit) -> Unit,
+    private val onItemLongClick: (Habit) -> Unit,
 ) : ListAdapter<Habit, HabitListViewHolder>(HabitListDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -18,7 +19,8 @@ class HabitListAdapter(
             parent,
             false
         ),
-        onItemClick = onItemClick
+        onItemClick = onItemClick,
+        onItemLongClick = onItemLongClick,
     )
 
     override fun onBindViewHolder(
