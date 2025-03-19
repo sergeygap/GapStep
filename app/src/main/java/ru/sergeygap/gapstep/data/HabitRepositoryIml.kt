@@ -7,14 +7,16 @@ import ru.sergeygap.gapstep.domain.repository.HabitRepository
 object HabitRepositoryIml : HabitRepository {
 
     private val _listHabits = mutableListOf<Habit>().apply {
-        repeat(6) {
-            Habit(
-                id = it,
-                type = if ((it % 2) == 0) {
-                    HabitType.Useful
-                } else {
-                    HabitType.NotUseful
-                }
+        repeat(26) {
+            add(
+                Habit(
+                    id = it,
+                    type = if ((it % 2) == 0) {
+                        HabitType.Useful
+                    } else {
+                        HabitType.NotUseful
+                    }
+                )
             )
         }
     }

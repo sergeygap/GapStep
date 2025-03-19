@@ -7,4 +7,12 @@ sealed class HabitType(
     data object Useful : HabitType("Полезная")
 
     data object NotUseful : HabitType("Неполезная")
+
+    companion object {
+        fun from(value: String): HabitType? = when (value) {
+            Useful.type -> Useful
+            NotUseful.type -> NotUseful
+            else -> null
+        }
+    }
 }

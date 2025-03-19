@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".presentation.habit_list.HabitListFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_habit"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -26,6 +34,6 @@
         android:fontFamily="@font/merriweather_black"
         android:text="@string/create_habit"
         app:icon="@drawable/add_24px"
-        app:iconGravity="textStart" />
+        app:iconGravity="start" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

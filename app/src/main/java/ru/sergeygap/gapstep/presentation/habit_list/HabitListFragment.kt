@@ -1,7 +1,5 @@
 package ru.sergeygap.gapstep.presentation.habit_list
 
-import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +8,13 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.androidbroadcast.vbpd.viewBinding
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentHabitListBinding
+import ru.sergeygap.gapstep.domain.entity.HabitType
 
 class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
 
@@ -24,7 +23,7 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+        setupViewPagerWithTabs()
         setupFAB()
     }
 
@@ -44,111 +43,19 @@ class HabitListFragment : Fragment(R.layout.fragment_habit_list) {
         }
     }
 
-    private fun setupRecyclerView() {
-        setupAdapter()
-        setupScrollListener()
-        setupSwipeActions()
-    }
+    private fun setupViewPagerWithTabs() {
+        val listTypes = listOf(HabitType.Useful, HabitType.NotUseful)
 
-    private fun setupAdapter() {
-        val adapter = HabitListAdapter(
-            onItemClick = { habit ->
-                val action = HabitListFragmentDirections
-                    .actionHabitListFragmentToCreateHabitFragment(habit.id)
-                findNavController().navigate(action)
-            },
-            onItemLongClick = { habit ->
-                viewModel.increaseCountInHabit(habit)
-            }
-        )
-        binding.rvHabit.adapter = adapter
-        viewModel.habits.observe(viewLifecycleOwner) { habits ->
-            (binding.rvHabit.adapter as? HabitListAdapter)?.submitList(habits)
-        }
-    }
-
-    private fun setupSwipeActions() {
-        val swipeCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean = false
-
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                val adapter = binding.rvHabit.adapter as? HabitListAdapter
-                val position = viewHolder.bindingAdapterPosition
-                val habitColor = adapter?.currentList?.getOrNull(position)?.color
-                    ?: Color.argb(0, 0, 0, 0)
-
-                val maxDx = viewHolder.itemView.width * 0.25f
-                val newDx = when {
-                    dX > maxDx -> maxDx
-                    dX < -maxDx -> -maxDx
-                    else -> dX
-                }
-
-                RecyclerViewSwipeDecorator.Builder(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-                    .addSwipeRightBackgroundColor(habitColor)
-                    .addSwipeRightLabel(getString(R.string.delete))
-                    .setSwipeRightLabelColor(Color.WHITE)
-                    .create()
-                    .decorate()
-
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    newDx,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
+        binding.viewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun createFragment(position: Int): Fragment {
+                return HabitPageFragment.newInstance(listTypes[position])
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) return
-                val adapter = binding.rvHabit.adapter as? HabitListAdapter
-                val habit = adapter?.currentList?.getOrNull(position) ?: return
-
-                when (direction) {
-                    ItemTouchHelper.RIGHT -> viewModel.deleteHabit(habit)
-                }
-            }
+            override fun getItemCount() = listTypes.size
         }
 
-        ItemTouchHelper(swipeCallback).attachToRecyclerView(binding.rvHabit)
-    }
-
-    private fun setupScrollListener() {
-        binding.rvHabit.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                when {
-                    dy > 0 && binding.fabHabit.isExtended -> binding.fabHabit.shrink()
-                    dy < 0 && !binding.fabHabit.isExtended -> binding.fabHabit.extend()
-                }
-            }
-        })
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = listTypes[position].type
+        }.attach()
     }
 }
