@@ -23,5 +23,8 @@
     <string name="helper_text_repeats_default_0">По умолчанию: 0</string>
     <string name="helper_text_priority_medium">По умолчанию: средний</string>
     <string name="picked_color">Выбранный цвет:</string>
+    <string name="habits">Привычки</string>
+    <string name="app_about">О приложении</string>
+    <string name="about_app_info">Приложение GapStep\nKotlin + XML</string>
 
 </resources>

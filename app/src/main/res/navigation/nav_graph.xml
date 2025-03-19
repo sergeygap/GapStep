@@ -16,6 +16,13 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
+
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="ru.sergeygap.gapstep.presentation.about_app.AboutAppFragment"
+        android:label="fragment_about_app"
+        tools:layout="@layout/fragment_about_app" />
+
     <fragment
         android:id="@+id/createHabitFragment"
         android:name="ru.sergeygap.gapstep.presentation.habit_create.CreateHabitFragment"
