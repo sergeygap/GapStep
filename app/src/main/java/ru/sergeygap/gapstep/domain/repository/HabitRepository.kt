@@ -13,4 +13,6 @@ interface HabitRepository {
     fun addHabit(habit: Habit)
 
     fun deleteHabit(habit: Habit)
+
+    fun increaseCountInHabit(habit: Habit)
 }

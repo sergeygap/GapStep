@@ -21,4 +21,11 @@
         <item name="ensureMinTouchTargetSize">false</item>
     </style>
 
+    <style name="Stripe">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:background">@color/md_theme_onBackground</item>
+    </style>
+
 </resources>

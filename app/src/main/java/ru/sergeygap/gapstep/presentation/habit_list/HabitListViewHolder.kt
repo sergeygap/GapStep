@@ -8,6 +8,7 @@ import ru.sergeygap.gapstep.domain.entity.Habit
 class HabitListViewHolder(
     private val binding: ItemHabitBinding,
     private val onItemClick: (Habit) -> Unit,
+    private val onItemLongClick: (Habit) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(habit: Habit) {
         with(binding) {
@@ -15,7 +16,7 @@ class HabitListViewHolder(
             tvDescription.text = habit.description
             viewColor.setBackgroundColor(habit.color)
             priority.text = habit.priority
-            type.text = habit.type
+            type.text = habit.type.type
             tvCount.text = String.format(
                 root.context.getString(R.string.times_and_period),
                 habit.count,
@@ -23,6 +24,10 @@ class HabitListViewHolder(
             )
             root.setOnClickListener {
                 onItemClick(habit)
+            }
+            root.setOnLongClickListener {
+                onItemLongClick(habit)
+                true
             }
         }
     }
