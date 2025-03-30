@@ -13,6 +13,7 @@ activity = "1.10.0"
 constraintlayout = "2.2.0"
 navigation = "2.8.7"
 recyclerviewSwipedecorator = "1.4"
+speedDial = "3.3.0"
 vbpd = "2.0.4"
 
 [libraries]
@@ -29,6 +30,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 recyclerview-swipedecorator = { module = "it.xabaras.android:recyclerview-swipedecorator", version.ref = "recyclerviewSwipedecorator" }
+speed-dial = { module = "com.leinardi.android:speed-dial", version.ref = "speedDial" }
 vbpd = { module = "dev.androidbroadcast.vbpd:vbpd", version.ref = "vbpd" }
 vbpd-reflection = { module = "dev.androidbroadcast.vbpd:vbpd-reflection", version.ref = "vbpd" }
 

@@ -27,5 +27,6 @@
     <string name="habits">Привычки</string>
     <string name="app_about">О приложении</string>
     <string name="about_app_info">Приложение GapStep\nKotlin + XML</string>
+    <string name="search">Поиск</string>
 
 </resources>
