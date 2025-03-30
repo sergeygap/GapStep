@@ -57,4 +57,5 @@ dependencies {
     implementation(libs.vbpd)
     implementation(libs.vbpd.reflection)
     implementation(libs.recyclerview.swipedecorator)
+    implementation(libs.kotlinx.datetime)
 }
