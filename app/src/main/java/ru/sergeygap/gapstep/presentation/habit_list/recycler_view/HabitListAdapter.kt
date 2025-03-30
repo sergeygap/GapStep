@@ -1,4 +1,4 @@
-package ru.sergeygap.gapstep.presentation.habit_list
+package ru.sergeygap.gapstep.presentation.habit_list.recycler_view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

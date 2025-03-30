@@ -28,5 +28,9 @@
     <string name="app_about">О приложении</string>
     <string name="about_app_info">Приложение GapStep\nKotlin + XML</string>
     <string name="search">Поиск</string>
+    <string name="search_hint">Введите название привычки</string>
+    <string name="text_sort">Сортировать по дате создания:</string>
+    <string name="text_new">Новые</string>
+    <string name="text_old">Старые</string>
 
 </resources>
