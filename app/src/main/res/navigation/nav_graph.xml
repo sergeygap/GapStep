@@ -36,6 +36,8 @@
             android:id="@+id/action_createHabitFragment_to_habitListFragment"
             app:destination="@id/habitListFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/habitListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

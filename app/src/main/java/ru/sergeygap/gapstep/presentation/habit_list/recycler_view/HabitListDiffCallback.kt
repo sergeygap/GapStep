@@ -1,4 +1,4 @@
-package ru.sergeygap.gapstep.presentation.habit_list
+package ru.sergeygap.gapstep.presentation.habit_list.recycler_view
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.sergeygap.gapstep.domain.entity.Habit
