@@ -5,7 +5,7 @@
     <string name="times_and_period">%1$d/%2$d</string>
     <string name="create_habit">Создать привычку</string>
     <string name="create_first_habit">Создайте свою первую привычку</string>
-    <string name="date_create_habit">Дата создания привычки:</string>
+    <string name="date_create_habit">Дата создания привычки: %s</string>
     <string name="change_habit">Изменить привычку</string>
     <string name="name">Название</string>
     <string name="description">Описание</string>

@@ -7,5 +7,5 @@ class SetSearchQueryUseCase(
     private val repository: HabitRepository,
 ) {
     operator fun invoke(searchText: String, sortType: SortType) =
-        repository.setSearchQueryUseCase(searchText, sortType)
+        repository.setSearchQuery(searchText, sortType)
 }

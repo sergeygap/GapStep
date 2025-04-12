@@ -79,7 +79,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         updateSelectedColor(habit.color)
         binding.tvCreatedDate.apply {
             isVisible = true
-            text = "${getString(R.string.date_create_habit)} ${habit.createdDate}"
+            text = getString(R.string.date_create_habit, habit.createdDate)
         }
     }
 
@@ -92,6 +92,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
             val newHabit = Habit(
                 id = habit?.id ?: -1,
                 name = binding.editTextUsername.text.toString().trim(),
+                createdDate = Habit.Dummy.createdDate,
                 description = binding.editTextDescription.text.toString().trim(),
                 type = selectedHabitType,
                 priority = binding.priorityAutoComplete.text?.trim()?.toString().orEmpty().ifEmpty {

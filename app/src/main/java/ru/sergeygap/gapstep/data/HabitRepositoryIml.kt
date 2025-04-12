@@ -3,7 +3,7 @@ package ru.sergeygap.gapstep.data
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ru.sergeygap.gapstep.data.dto.HabitDto
-import ru.sergeygap.gapstep.data.mapper.Mapper
+import ru.sergeygap.gapstep.data.mapper.HabitMapper
 import ru.sergeygap.gapstep.domain.entity.Habit
 import ru.sergeygap.gapstep.domain.entity.HabitType
 import ru.sergeygap.gapstep.domain.entity.SortType
@@ -15,19 +15,7 @@ object HabitRepositoryIml : HabitRepository {
     private var currentSortType: SortType = SortType.NORMAL
 
     private val _listHabits = mutableListOf<HabitDto>().apply {
-        add(
-            HabitDto(
-                id = 0,
-                name = "Чтение",
-                createdDate = Clock.System.now(),
-                description = "Чтение книг по вечерам",
-                priority = "Важная",
-                type = HabitType.Useful,
-                count = 0,
-                period = 0,
-                color = 0xFFFFFFAA.toInt()
-            )
-        )
+        add(HabitMapper.mapEntityToDto(Habit.Dummy))
         add(
             HabitDto(
                 id = 1,
@@ -279,11 +267,11 @@ object HabitRepositoryIml : HabitRepository {
 
 
     override fun getHabitById(id: Int): Habit {
-        return _listHabits.find { it.id == id }?.let { Mapper.mapDtoToEntity(it) }
+        return _listHabits.find { it.id == id }?.let { HabitMapper.mapDtoToEntity(it) }
             ?: throw IllegalArgumentException("Habit with id $id not found")
     }
 
-    override fun getListHabit(): List<Habit> = _listHabits.map { Mapper.mapDtoToEntity(it) }
+    override fun getListHabit(): List<Habit> = _listHabits.map { HabitMapper.mapDtoToEntity(it) }
 
     override fun addHabit(habit: Habit) {
         val newId = if (habit.id == -1) {
@@ -291,13 +279,13 @@ object HabitRepositoryIml : HabitRepository {
         } else {
             habit.id
         }
-        _listHabits.add(Mapper.mapEntityToDto(habit.copy(id = newId)))
+        _listHabits.add(HabitMapper.mapEntityToDto(habit.copy(id = newId)))
     }
 
     override fun updateHabit(habit: Habit) {
         val index = _listHabits.indexOfFirst { it.id == habit.id }
         if (index != -1) {
-            _listHabits[index] = Mapper.mapEntityToDto(habit)
+            _listHabits[index] = HabitMapper.mapEntityToDto(habit)
         } else {
             throw IllegalArgumentException("Habit with id ${habit.id} not found")
         }
@@ -310,13 +298,13 @@ object HabitRepositoryIml : HabitRepository {
     override fun increaseCountInHabit(habit: Habit) {
         val index = _listHabits.indexOfFirst { it.id == habit.id }
         if (index != -1) {
-            _listHabits[index] = Mapper.mapEntityToDto(habit.copy(count = habit.count + 1))
+            _listHabits[index] = HabitMapper.mapEntityToDto(habit.copy(count = habit.count + 1))
         } else {
             throw IllegalArgumentException("Habit with id ${habit.id} not found")
         }
     }
 
-    override fun getSearchListHabitUseCase(): List<Habit> {
+    override fun getSearchListHabit(): List<Habit> {
         return if (currentSearchQuery.isBlank()) {
             emptyList()
         } else {
@@ -329,11 +317,11 @@ object HabitRepositoryIml : HabitRepository {
                         else -> 0
                     }
                 }
-                .map { Mapper.mapDtoToEntity(it) }
+                .map { HabitMapper.mapDtoToEntity(it) }
         }
     }
 
-    override fun setSearchQueryUseCase(searchText: String, sortType: SortType) {
+    override fun setSearchQuery(searchText: String, sortType: SortType) {
         currentSearchQuery = searchText
         currentSortType = sortType
     }

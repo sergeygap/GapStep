@@ -20,7 +20,7 @@ class SearchBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_se
     private val binding: FragmentSearchBottomSheetBinding by viewBinding(
         FragmentSearchBottomSheetBinding::bind
     )
-    private val viewModel: HabitListViewModel by viewModels()
+    private val viewModel: HabitListViewModel by viewModels({ requireParentFragment() })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,21 +33,22 @@ class SearchBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_se
         binding.editTextSearch.doOnTextChanged { text, _, _, _ ->
             viewModel.setSearchQuery(text.toString())
         }
-        binding.chipGroupSort.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
+        binding.chipGroupSort.setOnCheckedStateChangeListener { _, checkedIds ->
+            if (checkedIds.isEmpty()) return@setOnCheckedStateChangeListener
+            when (checkedIds[0]) {
                 R.id.chipNewest -> {
                     viewModel.sortType = SortType.NEWEST
-                    viewModel.updateSearchResult()
                 }
+
                 R.id.chipOldest -> {
                     viewModel.sortType = SortType.OLDEST
-                    viewModel.updateSearchResult()
                 }
+
                 else -> {
                     viewModel.sortType = SortType.NORMAL
-                    viewModel.updateSearchResult()
                 }
             }
+            viewModel.updateSearchResult()
         }
     }
 

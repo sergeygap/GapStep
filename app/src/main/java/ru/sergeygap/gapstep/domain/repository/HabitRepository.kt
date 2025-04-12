@@ -17,7 +17,7 @@ interface HabitRepository {
 
     fun increaseCountInHabit(habit: Habit)
 
-    fun getSearchListHabitUseCase(): List<Habit>
+    fun getSearchListHabit(): List<Habit>
 
-    fun setSearchQueryUseCase(searchText: String, sortType: SortType)
+    fun setSearchQuery(searchText: String, sortType: SortType)
 }
