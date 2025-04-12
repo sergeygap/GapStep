@@ -16,6 +16,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import ru.sergeygap.gapstep.R
 import ru.sergeygap.gapstep.databinding.FragmentHabitPageBinding
 import ru.sergeygap.gapstep.domain.entity.HabitType
+import ru.sergeygap.gapstep.presentation.habit_list.recycler_view.HabitListAdapter
 
 class HabitPageFragment : Fragment(R.layout.fragment_habit_page) {
 

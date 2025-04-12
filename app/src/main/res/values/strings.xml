@@ -5,6 +5,7 @@
     <string name="times_and_period">%1$d/%2$d</string>
     <string name="create_habit">Создать привычку</string>
     <string name="create_first_habit">Создайте свою первую привычку</string>
+    <string name="date_create_habit">Дата создания привычки: %s</string>
     <string name="change_habit">Изменить привычку</string>
     <string name="name">Название</string>
     <string name="description">Описание</string>
@@ -26,5 +27,10 @@
     <string name="habits">Привычки</string>
     <string name="app_about">О приложении</string>
     <string name="about_app_info">Приложение GapStep\nKotlin + XML</string>
+    <string name="search">Поиск</string>
+    <string name="search_hint">Введите название привычки</string>
+    <string name="text_sort">Сортировать по дате создания:</string>
+    <string name="text_new">Новые</string>
+    <string name="text_old">Старые</string>
 
 </resources>

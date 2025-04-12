@@ -1,5 +1,6 @@
 package ru.sergeygap.gapstep.presentation.habit_create
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -52,12 +53,15 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
             val args = CreateHabitFragmentArgs.fromBundle(it)
             if (args.habitId == -1) return
             habit = viewModel.getHabitById(args.habitId)
-            habit?.let { fillHabitFields(it) }
+            habit?.let { habit ->
+                fillHabitFields(habit)
+            }
             binding.btnDeleteHabit.isVisible = true
             binding.btnAddHabit.text = getString(R.string.save)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun fillHabitFields(habit: Habit) {
         binding.topAppBar.title = getString(R.string.change_habit)
         binding.editTextUsername.setText(habit.name)
@@ -73,6 +77,10 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         binding.editTextRepeats.setText(habit.count.toString())
         binding.editTextGoal.setText(habit.period.toString())
         updateSelectedColor(habit.color)
+        binding.tvCreatedDate.apply {
+            isVisible = true
+            text = getString(R.string.date_create_habit, habit.createdDate)
+        }
     }
 
     private fun setupViewsElements() {
@@ -84,6 +92,7 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
             val newHabit = Habit(
                 id = habit?.id ?: -1,
                 name = binding.editTextUsername.text.toString().trim(),
+                createdDate = Habit.Dummy.createdDate,
                 description = binding.editTextDescription.text.toString().trim(),
                 type = selectedHabitType,
                 priority = binding.priorityAutoComplete.text?.trim()?.toString().orEmpty().ifEmpty {

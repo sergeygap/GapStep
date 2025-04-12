@@ -37,4 +37,11 @@
         app:icon="@drawable/add_24px"
         app:iconGravity="start" />
 
+    <com.leinardi.android.speeddial.SpeedDialView
+        android:id="@+id/speedDial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:clickable="false" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
